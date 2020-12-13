@@ -7,14 +7,16 @@ import (
 
 type Commit struct {
 	sha256 []byte
-	/** 项目根目录, 大小一般为1 */
-	trees     []Tree
-	author    []byte
-	committer []byte
+	/** 最新的项目根目录, 大小一般为1 */
+	trees     []core.Compound
+	author    string
+	committer string
 	/** 提交时间戳 */
 	timestamp int64
 	/** 父母节点 */
 	parent []core.CommitAble
+	/** 提交注释 */
+	comment string
 }
 
 /** commit entry */
@@ -32,4 +34,20 @@ func (*Commit) GetYamaType() string {
 
 func (commit *Commit) GetParent() []core.CommitAble {
 	return commit.parent
+}
+
+func (commit *Commit) GetCommitTree() []core.Compound {
+	return commit.trees
+}
+
+func (commit *Commit) GetComment() string {
+	return commit.comment
+}
+
+func (commit *Commit) GetTimestamp() int64 {
+	return commit.timestamp
+}
+
+func (commit *Commit) GetAuthor() string {
+	return commit.author
 }

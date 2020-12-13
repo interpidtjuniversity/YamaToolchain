@@ -28,3 +28,11 @@ func (*Blob) GetYamaType() string {
 func (blob *Blob) GetName() string {
 	return blob.name
 }
+
+func (blob *Blob) GetPath() string {
+	return blob.path
+}
+
+func (blob *Blob) GetContent() []byte {
+	return blob.content
+}

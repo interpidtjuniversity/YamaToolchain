@@ -5,8 +5,15 @@ import (
 	"reflect"
 )
 
+var (
+	commitAble = reflect.TypeOf((*core.CommitAble)(nil)).Elem()
+	Storable   = reflect.TypeOf((*core.Storable)(nil)).Elem()
+	UpdateAble = reflect.TypeOf((*core.UpdateAble)(nil)).Elem()
+	Sha256Able = reflect.TypeOf((*core.Sha256Able)(nil)).Elem()
+	Compound   = reflect.TypeOf((*core.Compound)(nil)).Elem()
+)
+
 func ComputeSha256(target core.Sha256Able) []byte {
-	commitAble := reflect.TypeOf((*core.CommitAble)(nil)).Elem()
 
 	print(isInstanceOf(target, commitAble))
 
