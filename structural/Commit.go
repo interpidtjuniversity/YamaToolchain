@@ -6,7 +6,7 @@ import (
 )
 
 type Commit struct {
-	sha256 []byte
+	sha256 string
 	/** 最新的项目根目录, 大小一般为1 */
 	trees     []core.Compound
 	author    string
@@ -20,8 +20,8 @@ type Commit struct {
 }
 
 /** commit entry */
-func (*Commit) GetSha256() []byte {
-	return nil
+func (commit *Commit) GetSha256() string {
+	return commit.sha256
 }
 
 func (*Commit) Update() bool {

@@ -1,23 +1,27 @@
 package structural
 
 import (
+	"../util"
 	"./core"
 	"reflect"
 )
 
 var (
-	commitAble = reflect.TypeOf((*core.CommitAble)(nil)).Elem()
+	CommitAble = reflect.TypeOf((*core.CommitAble)(nil)).Elem()
 	Storable   = reflect.TypeOf((*core.Storable)(nil)).Elem()
-	UpdateAble = reflect.TypeOf((*core.UpdateAble)(nil)).Elem()
-	Sha256Able = reflect.TypeOf((*core.Sha256Able)(nil)).Elem()
 	Compound   = reflect.TypeOf((*core.Compound)(nil)).Elem()
 )
 
-func ComputeSha256(target core.Sha256Able) []byte {
+func ComputeSha256(target core.Sha256Able) {
+	if isInstanceOf(target, Storable) {
+		store, _ := target.(core.Storable)
+		sha, _ := util.GetFileSHA256(store.GetPath())
+		target.SetSha256(sha)
+	} else if isInstanceOf(target, Compound) {
 
-	print(isInstanceOf(target, commitAble))
+	} else if isInstanceOf(target, CommitAble) {
 
-	return []byte{}
+	}
 }
 
 func isInstanceOf(target interface{}, parent reflect.Type) bool {
@@ -28,3 +32,4 @@ func isInstanceOf(target interface{}, parent reflect.Type) bool {
 	}
 	return false
 }
+

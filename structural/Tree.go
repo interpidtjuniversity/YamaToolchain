@@ -6,7 +6,7 @@ import (
 )
 
 type Tree struct {
-	sha256   []byte
+	sha256   string
 	children []core.YamaEntry
 	/** 文件夹名称 */
 	name string
@@ -15,8 +15,8 @@ type Tree struct {
 }
 
 /** tree entry */
-func (*Tree) GetSha256() []byte {
-	return nil
+func (tree *Tree) GetSha256() string {
+	return tree.sha256
 }
 
 func (*Tree) Update() bool {
@@ -33,10 +33,6 @@ func (tree *Tree) GetName() string {
 
 func (tree *Tree) GetPath() string {
 	return tree.path
-}
-
-func (tree *Tree) GetContent() []byte {
-	return nil
 }
 
 func (tree *Tree) GetYamaChildren() []core.YamaEntry {

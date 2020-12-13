@@ -2,7 +2,8 @@ package core
 
 /** sha256化 */
 type Sha256Able interface {
-	GetSha256() []byte
+	GetSha256() string
+	SetSha256(sha string)
 }
 
 /** 更新指针 */
@@ -22,10 +23,13 @@ type Storable interface {
 	GetName() string
 	GetPath() string
 	GetContent() []byte
+	SetContent(content []byte)
 }
 
 /** tree 次级接口*/
 type Compound interface {
+	GetName() string
+	GetPath() string
 	GetYamaChildren() []YamaEntry
 }
 

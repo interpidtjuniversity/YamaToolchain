@@ -1,4 +1,4 @@
-package fileUtil
+package util
 
 import (
 	"../constant"
@@ -45,3 +45,12 @@ func AdapterYAMADB(dirName string) string {
 		return dirName
 	}
 }
+
+func SHAProject() bool {
+	return false;
+}
+
+func SHATree(path string) {
+
+}
+
