@@ -16,6 +16,8 @@ type Commit struct {
 	parent []CommitAble
 	/** 提交注释 */
 	comment string
+	/** 提交信息 */
+	content []byte
 }
 
 /** commit entry */

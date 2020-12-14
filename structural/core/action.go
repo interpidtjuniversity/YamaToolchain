@@ -60,31 +60,36 @@ type CommitAble interface {
 	GetComment() string
 }
 
-func ComputeSha256(target Sha256Able) {
-	if isInstanceOf(target, StorableInstance) {
+/** 在sha运算之前将原始结果返回 */
+func ComputeSha256(target Sha256Able) []byte{
+	var originContent []byte
+	if IsInstanceOf(target, StorableInstance) {
 		store, _ := target.(Storable)
 		sha, _ := util.GetFileSHA256(store.GetPath())
 		target.SetSha256(sha)
-	} else if isInstanceOf(target, CompoundInstance) {
+	} else if IsInstanceOf(target, CompoundInstance) {
 		tree, _ := target.(Compound)
 		children := tree.GetYamaChildren()
 		var buff bytes.Buffer
 		for i:=0; i < len(children); i++ {
-			if isInstanceOf(children[i],StorableInstance) {
+			if IsInstanceOf(children[i],StorableInstance) {
 				store, _ := children[i].(Storable)
 				buff.Write(util.GetBytes(" ",constant.BLOB_SHA, constant.BLOB, children[i].GetSha256(), store.GetName()))
-			} else if isInstanceOf(children[i],CompoundInstance) {
+			} else if IsInstanceOf(children[i],CompoundInstance) {
 				tree, _ := children[i].(Compound)
 				buff.Write(util.GetBytes(" ",constant.TREE_SHA, constant.TREE, children[i].GetSha256(), tree.GetName()))
 			} else {
 			}
 		}
-		target.SetSha256(util.GetSimplySHA256(buff.String()))
-	} else if isInstanceOf(target, CommitAbleInstance) {
+		content := util.DeleteBytesNewLine(buff.Bytes())
+		originContent = content
+		target.SetSha256(util.GetSimplySHA256(string(content)))
+	} else if IsInstanceOf(target, CommitAbleInstance) {
 	}
+	return originContent
 }
 
-func isInstanceOf(target interface{}, parent reflect.Type) bool {
+func IsInstanceOf(target interface{}, parent reflect.Type) bool {
 	targetType := reflect.TypeOf(target)
 
 	if targetType.Implements(parent) {

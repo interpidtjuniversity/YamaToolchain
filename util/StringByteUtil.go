@@ -1,6 +1,9 @@
 package util
 
-import "bytes"
+import (
+	"bytes"
+	"strings"
+)
 
 func GetBytes(spacer string, strings ...string) []byte{
 	var buff bytes.Buffer
@@ -13,4 +16,16 @@ func GetBytes(spacer string, strings ...string) []byte{
 	buff.Write([]byte("\n"))
 
 	return buff.Bytes()
+}
+
+func DeleteBytesNewLine(bytes []byte) []byte{
+	str := string(bytes)
+	str = strings.TrimRight(str,"\n")
+	return []byte(str)
+}
+
+func DeleteBytesNewLineAndToString(bytes []byte) string{
+	str := string(bytes)
+	str = strings.TrimRight(str,"\n")
+	return str
 }

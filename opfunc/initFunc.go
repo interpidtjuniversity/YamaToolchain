@@ -33,7 +33,7 @@ func InitDB() int {
 	util.CreateDir(util.AdapterYAMADB(constant.FILE_SEPARATOR + YAMA_DB + constant.FILE_SEPARATOR + constant.YAMA_DEFAULT_OBJECT_DIR))
 	/** 对当前目录下的所有文件计算sha256值, 并且zlib压缩存储 */
 	tree := structural.NewTree().InitTreeWithValue(util.GetCurrentDir(),util.GetParentDirName(),util.GetChildren, util.GetBlobContent)
-	db.WriteTree(tree)
+	db.WriteTree(util.GetDBDir(), tree)
 
 	return 0
 }

@@ -30,10 +30,10 @@ func IsDir(dirName string) bool {
 }
 
 func CreateDir(dirName string) {
-	if IsDir(dirName) {
-		ClearDir(dirName)
-		return
-	}
+	//if IsDir(dirName) {
+	//	ClearDir(dirName)
+	//	return
+	//}
 	os.Mkdir(dirName, os.ModePerm)
 }
 
@@ -99,5 +99,19 @@ func CheckIsHidden(fileInfo os.FileInfo)bool{
 func GetParentDirName() string {
 	segment := strings.Split(GetCurrentDir(),constant.ANTI_FILE_SEPARATOR)
 	return segment[len(segment) - 1]
+}
+
+func CreateAndWriteObject(path string, sha256 string, content []byte) {
+	fileIndexName := sha256[0:2]
+	fileName := sha256[2:]
+	objectParentPath := path + constant.ANTI_FILE_SEPARATOR + fileIndexName
+	objectPath := objectParentPath + constant.ANTI_FILE_SEPARATOR + fileName
+	CreateDir(objectParentPath)
+	object, _ := os.Create(objectPath)
+	object.Write(content)
+}
+
+func GetDBDir() string {
+	return GetCurrentDir() + constant.ANTI_FILE_SEPARATOR + constant.YAMA_DEFAULT_DB + constant.ANTI_FILE_SEPARATOR + constant.YAMA_DEFAULT_OBJECT_DIR
 }
 

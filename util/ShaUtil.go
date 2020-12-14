@@ -5,7 +5,6 @@ import (
 	"encoding/hex"
 	"io"
 	"os"
-	"strings"
 )
 
 func GetFileSHA256(filePath string) (string, error){
@@ -26,7 +25,6 @@ func GetFileSHA256(filePath string) (string, error){
 
 /** 统一褪去一个 \n */
 func GetSimplySHA256(content string) string {
-	content = strings.TrimRight(content,"\n")
 	h := sha256.New()
 	h.Write([]byte(content))
 	return hex.EncodeToString(h.Sum(nil))

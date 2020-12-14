@@ -67,6 +67,6 @@ func (tree *Tree)InitTreeWithValue(path string, name string,
 		}
 	}
 	tree.children = children
-	ComputeSha256(tree)
+	tree.content = ComputeSha256(tree)
 	return tree
 }
