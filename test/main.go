@@ -1,8 +1,7 @@
 package main
 
 import (
-	"../structural/core"
-	"../util"
+	"../opfunc"
 	"bytes"
 	"compress/zlib"
 	"io"
@@ -42,9 +41,11 @@ func main() {
 	//
 	//resString := string(DoZlibUnCompress(res))
 	//fmt.Print(resString)
-	blob := core.Blob{}
-	blob.InitBlobWithValue( "D:\\goPlayground\\Yama\\YamToolchain\\YamaToolchain\\test\\main.go", "main.go", util.GetBlobContent)
+	//blob := core.Blob{}
+	//blob.InitBlobWithValue( "D:\\goPlayground\\Yama\\YamToolchain\\YamaToolchain\\test\\main.go", "main.go", util.GetBlobContent)
 
-	tree := core.Tree{}
-	tree.InitTreeWithValue("D:\\goPlayground\\Yama\\YamToolchain\\YamaToolchain\\structural\\core","core",util.GetChildren, util.GetBlobContent)
+	//tree := core.Tree{}
+	//tree.InitTreeWithValue("D:\\goPlayground\\Yama\\YamToolchain\\YamaToolchain\\structural\\core","core",util.GetChildren, util.GetBlobContent)
+
+	opfunc.InitDB()
 }

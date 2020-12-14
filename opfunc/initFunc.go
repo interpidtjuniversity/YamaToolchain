@@ -2,6 +2,8 @@ package opfunc
 
 import (
 	"../constant"
+	"../db"
+	"../structural"
 	"../util"
 	"os"
 )
@@ -25,9 +27,13 @@ func InitDB() int {
 	}
 	/** 创建全新的.yama目录 */
 	util.CreateDir(util.AdapterYAMADB(YAMA_DB))
-	/** 创建db */
-	util.CreateDir(util.AdapterYAMADB(YAMA_DB + constant.FILE_SEPARATOR + constant.YAMA_DEFAULT_OBJECT_DIR))
+	/** 设置yama隐藏 */
+	util.SetDirShield(util.AdapterYAMADB(YAMA_DB))
+	/** 创建db /objects */
+	util.CreateDir(util.AdapterYAMADB(constant.FILE_SEPARATOR + YAMA_DB + constant.FILE_SEPARATOR + constant.YAMA_DEFAULT_OBJECT_DIR))
 	/** 对当前目录下的所有文件计算sha256值, 并且zlib压缩存储 */
+	tree := structural.NewTree().InitTreeWithValue(util.GetCurrentDir(),util.GetParentDirName(),util.GetChildren, util.GetBlobContent)
+	db.WriteTree(tree)
 
 	return 0
 }
