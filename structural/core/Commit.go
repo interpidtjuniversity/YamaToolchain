@@ -1,20 +1,19 @@
-package structural
+package core
 
 import (
-	"../constant"
-	"./core"
+	"../../constant"
 )
 
 type Commit struct {
 	sha256 string
 	/** 最新的项目根目录, 大小一般为1 */
-	trees     []core.Compound
+	trees     []Compound
 	author    string
 	committer string
 	/** 提交时间戳 */
 	timestamp int64
 	/** 父母节点 */
-	parent []core.CommitAble
+	parent []CommitAble
 	/** 提交注释 */
 	comment string
 }
@@ -22,6 +21,10 @@ type Commit struct {
 /** commit entry */
 func (commit *Commit) GetSha256() string {
 	return commit.sha256
+}
+
+func (commit *Commit) SetSha256(sha string) {
+	commit.sha256 = sha
 }
 
 func (*Commit) Update() bool {
@@ -32,11 +35,15 @@ func (*Commit) GetYamaType() string {
 	return constant.COMMIT
 }
 
-func (commit *Commit) GetParent() []core.CommitAble {
+func (*Commit) GetContent() []byte {
+	return nil
+}
+
+func (commit *Commit) GetParent() []CommitAble {
 	return commit.parent
 }
 
-func (commit *Commit) GetCommitTree() []core.Compound {
+func (commit *Commit) GetCommitTree() []Compound {
 	return commit.trees
 }
 

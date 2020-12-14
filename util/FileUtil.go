@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path"
+	"path/filepath"
 )
 
 func ClearDir(dirName string) {
@@ -46,11 +47,24 @@ func AdapterYAMADB(dirName string) string {
 	}
 }
 
-func SHAProject() bool {
-	return false;
+func GetBlobContent(path string) []byte {
+	file, err := os.Open(path)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+	content, _ := ioutil.ReadAll(file)
+	return content
 }
 
-func SHATree(path string) {
-
+func GetChildren(path string) ([]os.FileInfo, []string){
+	var children []os.FileInfo
+	var childrenPath []string
+	filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
+		children = append(children,info)
+		childrenPath = append(childrenPath,path)
+		return nil
+	})
+	return children, childrenPath
 }
 

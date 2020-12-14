@@ -1,7 +1,8 @@
 package main
 
 import (
-	"../structural"
+	"../structural/core"
+	"../util"
 	"bytes"
 	"compress/zlib"
 	"fmt"
@@ -42,8 +43,8 @@ func main() {
 	//
 	//resString := string(DoZlibUnCompress(res))
 	//fmt.Print(resString)
-	blob := structural.Blob{}
-	blob.InitBlobWithValue( "", []byte{}, "I:\\Yama\\YamaToolchain\\YamaToolchain\\test\\main.go", "main.go")
-	structural.ComputeSha256(&blob)
-	fmt.Print("hh")
+	blob := core.Blob{}
+	blob.InitBlobWithValue( "D:\\goPlayground\\Yama\\YamToolchain\\YamaToolchain\\test\\main.go", "main.go", util.GetBlobContent)
+	//structural.ComputeSha256(&blob)
+
 }

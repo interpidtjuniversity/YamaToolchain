@@ -1,5 +1,18 @@
 package core
 
+import (
+	"../../constant"
+	"../../util"
+	"bytes"
+	"reflect"
+)
+
+var (
+	CommitAbleInstance = reflect.TypeOf((*CommitAble)(nil)).Elem()
+	StorableInstance   = reflect.TypeOf((*Storable)(nil)).Elem()
+	CompoundInstance   = reflect.TypeOf((*Compound)(nil)).Elem()
+)
+
 /** sha256化 */
 type Sha256Able interface {
 	GetSha256() string
@@ -16,6 +29,7 @@ type YamaEntry interface {
 	Sha256Able
 	UpdateAble
 	GetYamaType() string
+	GetContent() []byte
 }
 
 /** blob tree 顶级接口 */
@@ -44,4 +58,37 @@ type CommitAble interface {
 	GetTimestamp() int64
 	/** 注释 */
 	GetComment() string
+}
+
+func ComputeSha256(target Sha256Able) {
+	if isInstanceOf(target, StorableInstance) {
+		store, _ := target.(Storable)
+		sha, _ := util.GetFileSHA256(store.GetPath())
+		target.SetSha256(sha)
+	} else if isInstanceOf(target, CompoundInstance) {
+		tree, _ := target.(Compound)
+		children := tree.GetYamaChildren()
+		var buff bytes.Buffer
+		for i:=0; i < len(children); i++ {
+			if isInstanceOf(children[i],StorableInstance) {
+				store, _ := children[i].(Storable)
+				buff.Write(util.GetBytes(" ",constant.BLOB_SHA, constant.BLOB, children[i].GetSha256(), store.GetName()))
+			} else if isInstanceOf(children[i],CompoundInstance) {
+				tree, _ := children[i].(Compound)
+				buff.Write(util.GetBytes(" ",constant.TREE_SHA, constant.TREE, children[i].GetSha256(), tree.GetName()))
+			} else {
+			}
+		}
+		target.SetSha256(buff.String())
+	} else if isInstanceOf(target, CommitAbleInstance) {
+	}
+}
+
+func isInstanceOf(target interface{}, parent reflect.Type) bool {
+	targetType := reflect.TypeOf(target)
+
+	if targetType.Implements(parent) {
+		return true
+	}
+	return false
 }

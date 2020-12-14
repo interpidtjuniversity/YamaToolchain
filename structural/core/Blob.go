@@ -1,7 +1,7 @@
-package structural
+package core
 
 import (
-	"../constant"
+	"../../constant"
 )
 
 type Blob struct {
@@ -45,10 +45,10 @@ func (blob *Blob) SetContent(content []byte) {
 	blob.content = content
 }
 
-func (blob *Blob)InitBlobWithValue(sha256 string, content []byte, path string, name string) *Blob{
-	blob.sha256 = sha256
-	blob.content = content
+func (blob *Blob)InitBlobWithValue(path string, name string, getContent func(path string) []byte) *Blob{
 	blob.path = path
+	blob.content = getContent(blob.path)
 	blob.name = name
+	ComputeSha256(blob)
 	return blob
 }
