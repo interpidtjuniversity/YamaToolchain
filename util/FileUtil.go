@@ -57,12 +57,15 @@ func GetBlobContent(path string) []byte {
 	return content
 }
 
-func GetChildren(path string) ([]os.FileInfo, []string){
+/** 排除自己 */
+func GetChildren(originPath string) ([]os.FileInfo, []string){
 	var children []os.FileInfo
 	var childrenPath []string
-	filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
-		children = append(children,info)
-		childrenPath = append(childrenPath,path)
+	filepath.Walk(originPath, func(path string, info os.FileInfo, err error) error {
+		if path != originPath {
+			children = append(children, info)
+			childrenPath = append(childrenPath, path)
+		}
 		return nil
 	})
 	return children, childrenPath

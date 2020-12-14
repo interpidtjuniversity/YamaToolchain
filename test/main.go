@@ -47,6 +47,4 @@ func main() {
 
 	tree := core.Tree{}
 	tree.InitTreeWithValue("D:\\goPlayground\\Yama\\YamToolchain\\YamaToolchain\\structural\\core","core",util.GetChildren, util.GetBlobContent)
-	//structural.ComputeSha256(&blob)
-
 }

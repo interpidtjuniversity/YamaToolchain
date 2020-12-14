@@ -79,7 +79,7 @@ func ComputeSha256(target Sha256Able) {
 			} else {
 			}
 		}
-		target.SetSha256(buff.String())
+		target.SetSha256(util.GetSimplySHA256(buff.String()))
 	} else if isInstanceOf(target, CommitAbleInstance) {
 	}
 }

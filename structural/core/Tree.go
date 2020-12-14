@@ -58,7 +58,7 @@ func (tree *Tree)InitTreeWithValue(path string, name string,
 	var children []YamaEntry
 	fileInfos, filePaths := getChildren(tree.path)
 	for i:=0; i < len(fileInfos); i++ {
-		if fileInfos[i].IsDir() {
+		if !fileInfos[i].IsDir() {
 			blob := Blob{}
 			children = append(children, blob.InitBlobWithValue(filePaths[i],fileInfos[i].Name(),getContent))
 		} else {
