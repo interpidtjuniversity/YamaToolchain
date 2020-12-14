@@ -5,7 +5,6 @@ import (
 	"../util"
 	"bytes"
 	"compress/zlib"
-	"fmt"
 	"io"
 )
 
@@ -45,6 +44,9 @@ func main() {
 	//fmt.Print(resString)
 	blob := core.Blob{}
 	blob.InitBlobWithValue( "D:\\goPlayground\\Yama\\YamToolchain\\YamaToolchain\\test\\main.go", "main.go", util.GetBlobContent)
+
+	tree := core.Tree{}
+	tree.InitTreeWithValue("D:\\goPlayground\\Yama\\YamToolchain\\YamaToolchain\\structural\\core","core",util.GetChildren, util.GetBlobContent)
 	//structural.ComputeSha256(&blob)
 
 }
