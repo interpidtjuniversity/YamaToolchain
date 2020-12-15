@@ -111,6 +111,18 @@ func CreateAndWriteObject(path string, sha256 string, content []byte) {
 	object.Write(content)
 }
 
+func ReadObject(path string, sha256 string) []byte {
+	fileIndexName := sha256[0:2]
+	fileName := sha256[2:]
+	objectParentPath := path + constant.ANTI_FILE_SEPARATOR + fileIndexName
+	objectPath := objectParentPath + constant.ANTI_FILE_SEPARATOR + fileName
+	content, err := ioutil.ReadFile(objectPath)
+	if err != nil {
+		panic(err)
+	}
+	return content
+}
+
 func GetDBDir() string {
 	return GetCurrentDir() + constant.ANTI_FILE_SEPARATOR + constant.YAMA_DEFAULT_DB + constant.ANTI_FILE_SEPARATOR + constant.YAMA_DEFAULT_OBJECT_DIR
 }
