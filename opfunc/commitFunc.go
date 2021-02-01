@@ -1,5 +1,5 @@
 package opfunc
 
 func commit() int {
-	return 3
+	return 4
 }
